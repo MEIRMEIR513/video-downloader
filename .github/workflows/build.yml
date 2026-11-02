@@ -10,6 +10,8 @@ on:
 jobs:
   build:
     runs-on: windows-latest
+    permissions:
+      contents: write
     
     steps:
     - uses: actions/checkout@v4
@@ -34,8 +36,13 @@ jobs:
         pyinstaller --onefile --windowed --add-data "ffmpeg-n9.0-latest-win64-gpl-9.0;ffmpeg" video_downloader.py
         Move-Item -Path dist/video_downloader.exe -Destination dist/VideoDownloader.exe
     
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
+    - name: Create Release
+      uses: softprops/action-gh-release@v1
       with:
-        name: VideoDownloader-Windows
-        path: dist/VideoDownloader.exe
+        tag_name: v1.0.0
+        name: Video Downloader v1.0.0
+        files: dist/VideoDownloader.exe
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
