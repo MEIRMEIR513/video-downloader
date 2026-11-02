@@ -32,6 +32,7 @@ jobs:
     - name: Build EXE
       run: |
         pyinstaller --onefile --windowed --add-data "ffmpeg-n9.0-latest-win64-gpl-9.0;ffmpeg" video_downloader.py
+        Move-Item -Path dist/video_downloader.exe -Destination dist/VideoDownloader.exe
     
     - name: Upload artifact
       uses: actions/upload-artifact@v4
